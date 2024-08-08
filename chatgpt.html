@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Float Example</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 200px; /* Adjust as needed */
+            border: 1px solid #000;
+            position: relative;
+        }
+        .bottom {
+            margin-top: auto;
+            background-color: lightblue;
+            padding: 10px;
+        }
+        .right {
+            align-self: flex-end;
+            background-color: lightcoral;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bottom">Bottom Float</div>
+        <div class="right">Right Float</div>
+    </div>
+</body>
+</html>

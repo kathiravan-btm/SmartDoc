@@ -1,0 +1,422 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sedan+SC&family=Teko:wght@300..700&display=swap');
+
+/* General Styles */
+body {
+    background-color: #f8f9fa; /* Light background for better contrast */
+    font-family: "Sedan SC", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+}
+
+/* Text */
+.text {
+    color: #333; /* Darker color for better readability */
+    font-family: "Jaro", sans-serif;
+    font-size: 2.5rem; /* Responsive font size */
+    margin: 0.5rem;
+}
+
+/* Ruler */
+.ruler {
+    color: #6c757d; /* Lighter gray */
+    border: 1px dashed #6c757d;
+}
+
+/* Layout Containers */
+.tab, .tabsub {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tab {
+    margin: 0 5%;
+}
+
+.tabsub {
+    margin: 0 5%;
+    gap: 1.25rem;
+}
+
+.page-container {
+    margin: 0 auto;
+    max-width: 1200px; /* Center container with max width */
+}
+
+/* Element Styles */
+.element, .elementsub {
+    width: 100%; /* Full width for responsive design */
+}
+
+.element {
+    max-width: 186px;
+}
+
+.element li {
+    list-style: none;
+    padding: 0.5rem;
+}
+
+.element a {
+    text-decoration: none;
+    color: #007bff; /* Primary color */
+    padding: 0.5rem;
+    transition: padding 0.3s, border-color 0.3s;
+}
+
+.element a:hover, .element a.active {
+    padding-left: 1rem;
+    border-left: 3px solid #343a40; /* Darker border on hover */
+}
+
+.elementsub {
+    color: #fff;
+    border: 3px solid #007bff;
+    background-color: #343a40; /* Dark background */
+    text-align: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.elementsub:hover {
+    background-color: #495057;
+    transform: scale(1.05);
+}
+
+/* Image Styles */
+.image {
+    height: 80px;
+    width: 80px;
+    padding-top: 2rem;
+    padding-right: 2%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.image:hover {
+    transform: scale(1.1);
+}
+
+/* Top Navigation */
+.topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #007bff; /* Primary color background */
+    color: #fff;
+}
+
+/* File Upload */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    padding: 5px 10px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 5px;
+    width: 150px;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Result Box */
+.result-box {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 210px;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #007bff;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+}
+
+.result-box::-webkit-scrollbar {
+    display: none;
+}
+
+.result-box ul {
+    padding: 0;
+    margin: 0;
+}
+
+.result-box ul li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.result-box ul li:hover {
+    background-color: #e9ecef;
+}
+
+/* Flexbox and Alignment */
+.row, .mydiv, .endbox {
+    display: flex;
+    align-items: center;
+}
+
+.mydiv {
+    flex-direction: column;
+    position: relative;
+}
+
+/* Button Styles */
+.btn-open-popup {
+    background-color: rgba(128, 128, 128, 0.6);
+    height: 30px;
+    width: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-open-popup:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-close-popup {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #e74c3c;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-close-popup:hover {
+    background-color: #c0392b;
+}
+
+/* Popup Styles */
+.overlay-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.popup-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 75%;
+    height: 75%;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.overlay-container.show {
+    display: flex;
+    opacity: 1;
+}
+
+/* Keyframes for fadeInUp animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Image Preview */
+.preview-container {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 263px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+    padding: 20px;
+    width: 72%;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.preview {
+    border-radius: 0.3em;
+    border: 2px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    height: 25px;
+    text-align: center;
+    padding: 5px;
+    float: right;
+}
+
+.preview:hover {
+    cursor: pointer;
+}
+
+.img-preview {
+    height: 100%;
+    width: 100%;
+}
+
+/* Cropper Styles */
+.cropper-modal {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.cropper-view-box {
+    outline: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+/* Aspect Ratio and Crop Button */
+.aspect {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 65%;
+}
+
+.aspect li {
+    list-style: none;
+    display: inline;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba(135, 54, 54, 0.129);
+    border-radius: 5px;
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.aspect li:hover {
+    border: 1px solid #007bff;
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+.crop-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27%;
+}
+
+.crop-button button {
+    color: #fff;
+    width: 170px;
+    height: 35px;
+    margin: 10px 20px;
+    background-color: #007bff;
+    border-radius: 5px;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    border: 1px solid #007bff;
+}
+
+.crop-button button:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .tab, .tabsub {
+        margin: 0 2%;
+    }
+
+    .page-container {
+        margin: 0 2%;
+    }
+
+    .search-box input {
+        width: 100px;
+    }
+
+    .element {
+        width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .text {
+        font-size: 2rem;
+    }
+
+    .element, .elementsub {
+        width: 100%;
+    }
+
+    .popup-box {
+        width: 90%;
+        height: auto;
+    }
+
+    .preview-container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .image {
+        height: 60px;
+        width: 60px;
+    }
+
+    .search-box input {
+        width: 80px;
+    }
+}

@@ -1,0 +1,127 @@
+html{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-main-container{
+    background-color: rgb(217, 214, 214);
+    position: relative;
+    width: 76%;
+    height: 570px;
+    margin-top: 15px;
+}
+
+.rotate, .flip{
+    display: flex;
+    height: 10%;
+    width: 100%;
+    background-color: rgb(217, 214, 214);
+    align-items: center;
+    justify-content: center;
+}
+
+.middle-flexbox{
+    display: flex;
+    background-color: rgb(217, 214, 214);
+    height: 80%;
+    width: 100%;
+}
+
+.left-toolbox{
+background-color: rgb(217, 214, 214);
+width: 8%;
+}
+
+.image-canva{
+    background-color: rgb(217, 214, 214);
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-toolbox{
+    background-color: rgb(217, 214, 214);
+    width: 27%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;      
+}
+
+.bottom-toolbox{
+    background-color: rgb(217, 214, 214);
+    height: 10%;
+    width: 100%;
+    display: flex;
+}
+
+.top-toolbox svg{
+    padding: 10px;
+}
+
+#canva-image , #preview-img {
+    height: 80%;
+    width: 80%;
+    object-fit: contain;
+}
+
+.aspect{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 65%;
+    padding-left: 8%;
+
+}
+
+.aspect li{
+    list-style: none;
+    display: inline;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(135, 54, 54, 0.129);
+}
+
+.aspect li:hover{
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.crop-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 27%;
+    
+}
+
+.crop-button button{
+    align-items: center;
+    justify-content: center;
+    display: block;
+    width: 170px;
+    height: 35px;
+    margin: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgba(255, 255, 255, 0.129);
+    color: white;
+    border-radius: 3px;
+    outline: none;
+    transition-duration: .2s;
+    font-family: 'Maven Pro', sans-serif;
+    cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crop-button button:hover{
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}

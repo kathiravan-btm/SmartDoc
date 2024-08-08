@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unit Conversion Example</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/convert-units@2.3.4/lib/index.min.js"></script>
+<body>
+        <script>
+const converter = configureMeasurements({
+    volume,
+    mass,
+    length,
+});
+console.log(converter(1).from('V').to('mV').value);
+    </script>
+</body>
+</html> 
