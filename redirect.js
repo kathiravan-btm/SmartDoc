@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const resize = item.querySelector('.resize');
         const submit = item.querySelector('.setheightwidth');
         const measure = item.querySelector('.measuremetdiv');
-        
+        const measurementvalue = document.getElementById("measurement");
     
         editdiv.addEventListener("click", () => togglePopup(overlay));
         
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
         uploadButton.addEventListener("click", () => fileInput.click());
 
         // Add event listener to the file input
-        fileInput.addEventListener("change", () => loadImage(closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton));
+        fileInput.addEventListener("change", () => loadImage(measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton));
     });
 });
 
@@ -37,8 +37,8 @@ const togglePopup = (overlay) => {
     overlay.classList.toggle('show');
 }
 
-const loadImage = (closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton
-    ) => {
+const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton
+    ) => {  
 
         let filetype = "";
     let file = fileInput.files[0];
@@ -110,17 +110,44 @@ const loadImage = (closebutton,fileInput, responseDiv, divbox, editdiv, imagediv
                 let initwidth = 0;
                 let initheight = 0;
 
-
+                
                 submit.onclick = () => {
+
+                let dpi = 96;
                 let  initwidth =  measure.querySelector("#width").value;
                 let  initheight  = measure.querySelector('#height').value;
+                let output = measurementvalue.value;
+                let pixelsheight;
+                let pixelswidth;
+                switch(output) {
+                    case 'mm':
+                        pixelswidth = (initwidth / 25.4) * dpi;
+                        pixelsheight = (initheight / 25.4) * dpi;
+                        
+                        break;
+                    case 'cm':
+                        pixelswidth = (initwidth / 2.54) * dpi;
+                        pixelsheight = (initheight / 2.54) * dpi;
+                        console.log(pixelswidth);
+                        console.log(pixelsheight);
+                        break;
+                    case 'in':
+                        pixelswidth = initwidth * dpi;
+                        pixelsheight = initheight * dpi;
+                        break;
+                    case 'px':
+                        pixelsheight = initheight;
+                        pixelswidth = initwidth;
+                        break;
+                    default:
+                        throw new Error('Unsupported unit type');}
                 var sizeInBytes = file.size;
                 var sizeInKB = sizeInBytes / 1024; 
                 console.log(`${file.name} has a size of ${sizeInKB} KB.\n`);
 
-                  console.log(initheight);
-                  console.log(initwidth);
-                  let calculatedaspectratio = initwidth/initheight;
+                  console.log(pixelswidth);
+                  console.log(pixelsheight);
+                  let calculatedaspectratio = pixelswidth/pixelsheight;
                   cropper.setAspectRatio(calculatedaspectratio);
                 }
                 //custom aspect ratio
