@@ -76,7 +76,6 @@ const loadImage = (fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rota
               },
             ready: function() {
 
-                // zoom for image
                 zoom[0].onclick = () => cropper.zoom(0.1);
                 zoom[1].onclick = () => cropper.zoom(-0.1);
 
