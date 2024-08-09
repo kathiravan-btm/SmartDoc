@@ -23,14 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const measure = item.querySelector('.measuremetdiv');
         
     
-        closebutton.addEventListener("click", () => togglePopup(overlay));
         editdiv.addEventListener("click", () => togglePopup(overlay));
         
         // Add event listener to the upload button
         uploadButton.addEventListener("click", () => fileInput.click());
 
         // Add event listener to the file input
-        fileInput.addEventListener("change", () => loadImage(fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton));
+        fileInput.addEventListener("change", () => loadImage(closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton));
     });
 });
 
@@ -38,7 +37,7 @@ const togglePopup = (overlay) => {
     overlay.classList.toggle('show');
 }
 
-const loadImage = (fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton
+const loadImage = (closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton
     ) => {
 
         let filetype = "";
@@ -61,7 +60,15 @@ const loadImage = (fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rota
         imagediv.innerHTML = `<img src="${url}" alt="Selected Image" />`;
 
         const image_Workspace = imagediv.querySelector('img');
-        
+
+        closebutton.addEventListener("click", () => {
+            overlay.classList.toggle('show');
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                var downloadUrl = window.URL.createObjectURL(blob)
+                responseDiv.innerHTML = `<img src="${downloadUrl}" alt="Selected Image" />`;
+            })
+        });
+
         const options = {
             dragMode: 'move',
             autocrop:true,
