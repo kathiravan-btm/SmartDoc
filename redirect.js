@@ -78,9 +78,6 @@ const loadImage = (closebutton,fileInput, responseDiv, divbox, editdiv, imagediv
             toggleDragModeOnDblclick:false,
             viewMode: 1,
             background: true,
-            crop(event) {
-                console.log(event.detail.x); 
-              },
             ready: function() {
 
                 zoom[0].onclick = () => cropper.zoom(0.1);
