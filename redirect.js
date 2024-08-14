@@ -18,18 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const aspectRatio = item.querySelectorAll(' .aspect li');
         const download = item.querySelector('.download-image')
         const reset = item.querySelector('.reset');
-        const resize = item.querySelector('.resize');
         const submit = item.querySelector('.setheightwidth');
         const measure = item.querySelector('.measuremetdiv');
-        const measurementvalue = document.getElementById("measurement");
-    
+        const measurementvalue = item.querySelector("#measurement");
+        const dpivalue = item.querySelector("#dpivalue");
+        const qualitykbmax = item.querySelector("#qualitykbmax");
+        const qualitykbmin = item.querySelector("#qualitykbmin");
+
+        // console.log(measurementvalue.value);
         editdiv.addEventListener("click", () => togglePopup(overlay));
         
         // Add event listener to the upload button
         uploadButton.addEventListener("click", () => fileInput.click());
 
         // Add event listener to the file input
-        fileInput.addEventListener("change", () => loadImage(measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton));
+        fileInput.addEventListener("change", () => loadImage(qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton));
     });
 });
 
@@ -37,7 +40,7 @@ const togglePopup = (overlay) => {
     overlay.classList.toggle('show');
 }
 
-const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,resize,submit,measure,overlay,uploadButton
+const loadImage = (qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton
     ) => {  
 
         let filetype = "";
@@ -73,11 +76,12 @@ const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, 
             dragMode: 'move',
             autocrop:true,
             responsive:true,
-            Highlight:false,
-            movable:false,
+            Highlight:true,
+            movable:true,
+            checkOrientation:false,
             toggleDragModeOnDblclick:false,
-            viewMode: 1,
-            background: true,
+            viewMode: 2,
+            background: true   ,
             ready: function() {
 
                 zoom[0].onclick = () => cropper.zoom(0.1);
@@ -104,46 +108,77 @@ const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, 
                 aspectRatio[1].onclick = () => cropper.setAspectRatio(1.3333333333333333);
                 aspectRatio[2].onclick = () => cropper.setAspectRatio(1);
                 aspectRatio[3].onclick = () => cropper.setAspectRatio(0.6666666666666666);
-                aspectRatio[4].onclick = () => cropper.setAspectRatio(0);
-                resize.onclick = () =>    cropper.setAspectRatio(1.2857142857142857142857142857143);
-                
+                aspectRatio[4].onclick = () => cropper.setAspectRatio(0);                
                 let initwidth = 0;
                 let initheight = 0;
 
                 
                 submit.onclick = () => {
 
-                let dpi = 96;
+                let dpi = 200;
                 let  initwidth =  measure.querySelector("#width").value;
                 let  initheight  = measure.querySelector('#height').value;
                 let output = measurementvalue.value;
-                let pixelsheight;
-                let pixelswidth;
+                let pixelsheight = 0;
+                let pixelswidth = 0;
+                console.log(output)
+                if (dpivalue.value){
+                    dpi = dpivalue.value;
+                }
                 switch(output) {
                     case 'mm':
                         pixelswidth = (initwidth / 25.4) * dpi;
                         pixelsheight = (initheight / 25.4) * dpi;
-                        
+                        console.log("mm");
+                        cropper.setCropBoxData({
+                            minCropBoxHeight: pixelsheight,
+                            minCropBoxWidth:pixelswidth
+                          });
+                          cropper.options.minCropBoxWidth = pixelswidth;
+                          cropper.options.minCropBoxHeight = pixelsheight;  
                         break;
                     case 'cm':
                         pixelswidth = (initwidth / 2.54) * dpi;
                         pixelsheight = (initheight / 2.54) * dpi;
-                        console.log(pixelswidth);
-                        console.log(pixelsheight);
+                        console.log("cm");
+                        cropper.setCropBoxData({
+                            minCropBoxHeight: pixelsheight,
+                            minCropBoxWidth:pixelswidth
+                          });
+                          cropper.options.minCropBoxWidth = pixelswidth;
+                          cropper.options.minCropBoxHeight = pixelsheight;  
                         break;
                     case 'in':
                         pixelswidth = initwidth * dpi;
                         pixelsheight = initheight * dpi;
+                        console.log("in");
+                        cropper.setCropBoxData({
+                            minCropBoxHeight: pixelsheight,
+                            minCropBoxWidth:pixelswidth
+                          });
+                          cropper.options.minCropBoxWidth = pixelswidth;
+                          cropper.options.minCropBoxHeight = pixelsheight;  
                         break;
                     case 'px':
                         pixelsheight = initheight;
                         pixelswidth = initwidth;
+                        console.log("px");
+                        cropper.setCropBoxData({
+                            minCropBoxHeight: pixelsheight,
+                            minCropBoxWidth:pixelswidth
+                          });
+                        cropper.options.minCropBoxWidth = pixelswidth;
+                        cropper.options.minCropBoxHeight = pixelsheight;
                         break;
                     default:
                         throw new Error('Unsupported unit type');}
                 var sizeInBytes = file.size;
                 var sizeInKB = sizeInBytes / 1024; 
                 console.log(`${file.name} has a size of ${sizeInKB} KB.\n`);
+                cropper.getCroppedCanvas().toBlob((blob) => {   
+                    var downloadUrl = window.URL.createObjectURL(blob)
+                    console.log((blob.size)/1024 , "kb")
+                },'image/jpeg', 0.9);
 
                   console.log(pixelswidth);
                   console.log(pixelsheight);
@@ -164,7 +199,9 @@ const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, 
 
                 //resize the cropper
 
-                
+
+                let qualityvalue=1;
+
 
                 download.onclick = () => {
                     cropper.getCroppedCanvas().toBlob((blob) => {
@@ -178,13 +215,24 @@ const loadImage = (measurementvalue,closebutton,fileInput, responseDiv, divbox, 
                         } else {
                             a.download = 'cropped-image.jpg';
                         }
+                        // let qualityvalue=1;
+
+                        if (qualitykbmax < blob.size) {
+                            qualityvalue = 1;
+                        } else {
+                            qualityvalue = 1; // assuming some starting value, as it's not clear from your code
+                            while (qualitykbmax < blob.size && blob.size > qualitymin ) {
+                                qualityvalue -= 0.01;
+                                // Adjust qualitykb or blob.size here if necessary to avoid an infinite loop
+                            }
+                        }
+                        
                                           // output image name
                         a.click()
-                    })
+                    },'image/jpeg', qualityvalue);
                 }
             }
         };
-
         var cropper = new Cropper(image_Workspace, options);
     }
 };
