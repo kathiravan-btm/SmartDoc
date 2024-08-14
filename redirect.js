@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const dpivalue = item.querySelector("#dpivalue");
         const qualitykbmax = item.querySelector("#qualitykbmax");
         const qualitykbmin = item.querySelector("#qualitykbmin");
-
         // console.log(measurementvalue.value);
         editdiv.addEventListener("click", () => togglePopup(overlay));
         
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         uploadButton.addEventListener("click", () => fileInput.click());
 
         // Add event listener to the file input
-        fileInput.addEventListener("change", () => loadImage(qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton));
+        fileInput.addEventListener("change", () => loadImage(clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton));
     });
 });
 
@@ -40,7 +39,7 @@ const togglePopup = (overlay) => {
     overlay.classList.toggle('show');
 }
 
-const loadImage = (qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton
+const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutton,fileInput, responseDiv, divbox, editdiv, imagediv, zoom, rotate, flip, aspectRatio,download,reset,submit,measure,overlay,uploadButton
     ) => {  
 
         let filetype = "";
@@ -208,12 +207,20 @@ const loadImage = (qualitykbmax,qualitykbmin,dpivalue,measurementvalue,closebutt
                         var downloadUrl = window.URL.createObjectURL(blob)
                         var a = document.createElement('a')
                         a.href = downloadUrl
+                        let clientnames = "cropped-image"
+                        if (document.querySelector("#clientname").value){
+                        clientnames = document.querySelector("#clientname").value;
+                    }
                         if (filetype === "jpg") {
-                            a.download = 'cropped-image.jpg';
+                            a.download = `${clientnames}.jpg`;
+                            console.log(clientnames);
                         } else if (filetype === "jpeg") {
-                            a.download = 'cropped-image.jpeg';
+                            a.download = `${clientnames}.jpg`;
+                            console.log(clientnames);
+
                         } else {
-                            a.download = 'cropped-image.jpg';
+                            a.download = `${clientnames}.jpg`;     
+                            console.log(clientnames);
                         }
                         // let qualityvalue=1;
 
