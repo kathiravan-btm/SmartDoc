@@ -111,6 +111,10 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                 let initwidth = 0;
                 let initheight = 0;
 
+
+                let pixelsheight = 0;
+                let pixelswidth = 0;
+
                 
                 submit.onclick = () => {
 
@@ -118,8 +122,6 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                 let  initwidth =  measure.querySelector("#width").value;
                 let  initheight  = measure.querySelector('#height').value;
                 let output = measurementvalue.value;
-                let pixelsheight = 0;
-                let pixelswidth = 0;
                 console.log(output)
                 if (dpivalue.value){
                     dpi = dpivalue.value;
@@ -138,7 +140,7 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                         break;
                     case 'cm':
                         pixelswidth = (initwidth / 2.54) * dpi;
-                        pixelsheight = (initheight / 2.54) * dpi;
+                        pixelsheight = (initheight / 2.54) * dpi;   
                         console.log("cm");
                         cropper.setCropBoxData({
                             minCropBoxHeight: pixelsheight,
@@ -163,11 +165,11 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                         pixelswidth = initwidth;
                         console.log("px");
                         cropper.setCropBoxData({
-                            minCropBoxHeight: pixelsheight,
-                            minCropBoxWidth:pixelswidth
+                            minCropBoxHeight: 100,
+                            minCropBoxWidth:100
                           });
-                        cropper.options.minCropBoxWidth = pixelswidth;
-                        cropper.options.minCropBoxHeight = pixelsheight;
+                        cropper.options.minCropBoxWidth = 100;
+                        cropper.options.minCropBoxHeight = 100;
                         break;
                     default:
                         throw new Error('Unsupported unit type');}
@@ -199,12 +201,13 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                 //resize the cropper
 
 
-                let qualityvalue=1;
-
-
+                
+                
                 download.onclick = () => {
+                    let qualityvalue=1;
                     cropper.getCroppedCanvas().toBlob((blob) => {
-                        var downloadUrl = window.URL.createObjectURL(blob)
+                        
+                        var downloadUrl = resizeImage(pixelsheight,pixelswidth); 
                         var a = document.createElement('a')
                         a.href = downloadUrl
                         let clientnames = "cropped-image"
@@ -222,20 +225,8 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
                             a.download = `${clientnames}.jpg`;     
                             console.log(clientnames);
                         }
-                        // let qualityvalue=1;
-
-                        if (qualitykbmax < blob.size) {
-                            qualityvalue = 1;
-                        } else {
-                            qualityvalue = 1; // assuming some starting value, as it's not clear from your code
-                            while (qualitykbmax < blob.size && blob.size > qualitymin ) {
-                                qualityvalue -= 0.01;
-                                // Adjust qualitykb or blob.size here if necessary to avoid an infinite loop
-                            }
-                        }
                         
-                                          // output image name
-                        a.click()
+                        a.click() 
                     },'image/jpeg', qualityvalue);
                 }
             }
@@ -243,3 +234,44 @@ const loadImage = (clientname,qualitykbmax,qualitykbmin,dpivalue,measurementvalu
         var cropper = new Cropper(image_Workspace, options);
     }
 };
+
+
+  // Function to convert a blob to an image element
+function createImageFromBlob(blob) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        const url = URL.createObjectURL(blob);
+
+        img.onload = () => {
+            resolve(img);  // Resolve the promise with the image element once it's loaded
+            URL.revokeObjectURL(url);  // Clean up the object URL
+        };
+
+        img.onerror = () => {
+            reject(new Error('Failed to load image from blob'));  // Reject if there's an error
+            URL.revokeObjectURL(url);  // Clean up even in case of error
+        };
+
+        img.src = url;
+    });
+}
+
+
+function resizeImage(imgToResize, pixelsheight, pixelswidth) {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+
+    // Set canvas dimensions
+    canvas.width = pixelswidth;
+    canvas.height = pixelsheight;
+
+    // Draw the image onto the canvas with the new dimensions
+    context.drawImage(
+        imgToResize,
+        0, 0,
+        pixelswidth, pixelsheight
+    );
+
+    // Convert the canvas content to a data URL (base64 encoded image)
+    return canvas.toDataURL();
+}

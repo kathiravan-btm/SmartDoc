@@ -391,6 +391,9 @@ align-items: center;
 justify-content: center;
 }
 
+.right-toolbox{
+    width: 8%;
+}
 
 
 .bottom-toolbox{
@@ -410,11 +413,6 @@ justify-content: center;
     width: 80%;
     object-fit: contain;
 }
-
-/* .image-canva img{
-    height: 100%;
-    object-fit: contain;
-} */
 
 .aspect{
     display: flex;
@@ -487,7 +485,7 @@ justify-content: center;
 
 .image-container{
     padding: 20px;
-    width: 72%;
+    width: 86%;
     border-right: 1px solid rgba(255, 255, 255, 0.239);
     border-bottom: 1px solid rgba(255, 255, 255, 0.239);
 }
